@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<head>
+  <title>Test</title>
+  <script type="text/javascript">
+    function jsonpCallback(response)
+    {
+      console.log('Executing callback.');
+      console.log(response);
+    }
+  </script>
+  <script src="https://feeds.pinboard.in/json/u:d-metcalfe/t:software-development?cb=jsonpCallback"></script>
+</head>
+<body>
+  <p>This page is used for the purposes of development, it's easier to try new Javascript code in here than it is in a tiddler.</p>
+</body>
