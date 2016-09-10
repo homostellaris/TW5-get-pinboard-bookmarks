@@ -1,0 +1,9 @@
+{
+  "title": "$:/plugins/moderatemisbehaviour/get-pinboard-bookmarks",
+  "description": "Enriches tiddlers with bookmarks from your Pinboard account.",
+  "author": "Daniel Metcalfe",
+  "version": "0.1.0",
+  "core-version": ">=5.1.13",
+  "source": "https://github.com/moderatemisbehaviour/TW5-get-pinboard-bookmarks",
+  "plugin-type": "plugin"
+}
