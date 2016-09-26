@@ -26,7 +26,7 @@ exports.startup = function() {
     console.log(`Tiddler count before: ${tiddlerCountBefore}`);
     var tiddlerCountAfter;
 
-    // deleteAllPinboardTiddlers();
+    deleteAllPinboardTiddlers();
     createPinboardDirectory();
     getPinboardBookmarksFromApi();
 

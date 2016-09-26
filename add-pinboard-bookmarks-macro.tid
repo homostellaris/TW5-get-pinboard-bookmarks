@@ -1,0 +1,63 @@
+title: Add Pinboard Bookmarks
+tags: $:/tags/Macro
+
+\define pinboard-bookmarks-list-by-tag(tag,callingTiddler)
+
+<$set name="tag-state" value=<<qualify """$:/state/pinboard-bookmarks/$callingTiddler$-$tag$""">>>
+
+<$reveal type="nomatch" state=<<tag-state>> text="open">
+
+<$button set=<<tag-state>> setTo="open" class="tc-btn-invisible">
+{{$:/core/images/right-arrow}}
+$tag$
+</$button>
+
+</$reveal>
+
+<$reveal type="match" state=<<tag-state>> text="open">
+
+<$button set=<<tag-state>> setTo="closed" class="tc-btn-invisible">
+{{$:/core/images/down-arrow}}
+<<currentTiddler>>
+</$button>
+
+</$reveal>
+
+<$reveal type="match" state=<<tag-state>> text="open">
+
+<$list filter="[all[tiddlers]tag[$tag$]]"/>
+
+</$reveal>
+\end
+
+\define pinboard-bookmarks()
+<$set name="tag-state" value=<<qualify """$:/state/pinboard-bookmarks/$(currentTiddler)$""">>>
+
+<$reveal type="nomatch" state=<<tag-state>> text="open">
+
+<$button set=<<tag-state>> setTo="open" class="tc-btn-invisible">
+{{$:/core/images/right-arrow}}
+Pinboard Bookmarks
+</$button>
+
+</$reveal>
+
+<$reveal type="match" state=<<tag-state>> text="open">
+
+<$button set=<<tag-state>> setTo="closed" class="tc-btn-invisible">
+{{$:/core/images/down-arrow}}
+Pinboard Bookmarks
+</$button>
+
+</$reveal>
+
+<$reveal type="match" state=<<tag-state>> text="open">
+
+<$list filter="[all[current]tags[]]">
+
+<$macrocall $name="pinboard-bookmarks-list-by-tag" tag=<<currentTiddler>> callingTiddler="$(currentTiddler)$"/>
+
+</$list>
+
+</$reveal>
+\end
