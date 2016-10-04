@@ -1,11 +1,12 @@
 # TW5-get-pinboard-bookmarks
-## Disclaimer
+### Disclaimer
 This plugin is a work in progress, it is not yet `1.0`.
 This plugin only works with the Node.js version of TiddlyWiki5.
 
 # Getting Started
 *Coming soon...*
 
+# How It Works
 On startup the plugin retrieves all your bookmarks from the Pinboard API using
 the `posts/all` method. It asynchronously processes the JSON response and writes a new tiddler for each bookmark.
 These 'bookmark tiddlers' have the following characteristics.
