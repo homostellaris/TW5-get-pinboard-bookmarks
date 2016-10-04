@@ -1,0 +1,68 @@
+title: Get Pinboard Bookmarks Macro
+tags: $:/tags/Macro
+
+\define pinboard-bookmarks-list-by-tag(tag)
+<$list filter="[all[tiddlers]tag[$tag$]!has[draft.of]]">
+    <$set name="item-class" filter=<<toc-tabbed-selected-item-filter selectedTiddler:"""selectedTiddler""">> value="toc-item-selected" emptyValue="toc-item">
+        <!-- Provides the indentation relative to tag. -->
+        <ol>
+            <li class=<<item-class>>>
+            <!-- Use of the link widget was necessary to tap existing TOC CSS styles which specify a `toc-item-selected > a`. List widgets default template produces `toc-item-selected > div > a`. -->
+                <$link>
+                    <$view field="title"/>
+                </$link>
+            </li>
+        </ol>
+    </$set>
+</$list>
+\end
+
+\define pinboard-bookmark-tag-body(callingTiddler,tag)
+<$set name="tag-state" value=<<qualify "$callingTiddler$-$tag$">>>
+    <$link>
+        <$list filter="[all[current]]">
+            <$reveal type="nomatch" state=<<tag-state>> text="open">
+                <$button set=<<tag-state>> setTo="open" class="tc-btn-invisible">
+                    {{$:/core/images/right-arrow}}
+                    <$view field="title"/>
+                </$button>
+            </$reveal>
+                <$reveal type="match" state=<<tag-state>> text="open">
+                    <$button set=<<tag-state>> setTo="closed" class="tc-btn-invisible">
+                        {{$:/core/images/down-arrow}}
+                        <$view field="title"/>
+                    </$button>
+                </$reveal>
+        </$list>
+    </$link>
+    <$reveal type="match" state=<<tag-state>> text="open">
+        <$macrocall $name="pinboard-bookmarks-list-by-tag" tag=<<currentTiddler>>/>
+    </$reveal>
+</$set>
+\end
+
+\define get-pinboard-bookmarks()
+<div class="tc-tabbed-table-of-contents">
+    <$linkcatcher to="selectedTiddler">
+        <div class="tc-table-of-contents">
+            <ol class="tc-toc toc-selective-expandable">
+                <$list filter="[all[current]tags[]]">
+                    <!-- Currently selection styling is not working on tags. -->
+                    <$set name="item-class" filter="[all[current]field:title{selectedTiddler}]" value="toc-item-selected" emptyValue="toc-item">
+                        <li class=<<item-class>>>
+                            <!-- Would have included the contents of this macro right here but the only way I could find to transclude what I wanted was via a macro variable. -->
+                            <$macrocall $name="pinboard-bookmark-tag-body" callingTiddler="$(currentTiddler)$" tag=<<currentTiddler>>/>
+                        </li>
+                    </$set>
+                </$list>
+            </ol>
+        </div>
+    </$linkcatcher>
+    <div class="tc-tabbed-table-of-contents-content">
+        <h1>{{selectedTiddler}}</h1>
+        <$transclude mode="block" tiddler={{selectedTiddler}}>
+            This tiddler does not exist.
+        </$transclude>
+    </div>
+</div>
+\end
