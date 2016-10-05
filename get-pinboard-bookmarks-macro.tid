@@ -3,7 +3,7 @@ tags: $:/tags/Macro
 
 \define pinboard-bookmarks-list-by-tag(tag)
 <$list filter="[all[tiddlers]tag[$tag$]!has[draft.of]]">
-    <$set name="item-class" filter=<<toc-tabbed-selected-item-filter selectedTiddler:"""selectedTiddler""">> value="toc-item-selected" emptyValue="toc-item">
+    <$set name="item-class" filter=<<toc-tabbed-selected-item-filter selectedTiddler:"""$:/temp/get-pinboard-bookmarks/selectedTiddler""">> value="toc-item-selected" emptyValue="toc-item">
         <!-- Provides the indentation relative to tag. -->
         <ol>
             <li class=<<item-class>>>
@@ -18,7 +18,7 @@ tags: $:/tags/Macro
 \end
 
 \define pinboard-bookmark-tag-body(callingTiddler,tag)
-<$set name="tag-state" value=<<qualify "$callingTiddler$-$tag$">>>
+<$set name="tag-state" value=<<qualify """$:/state/get-pinboard-bookmarks/$callingTiddler$-$tag$""">>>
     <$link>
         <$list filter="[all[current]]">
             <$reveal type="nomatch" state=<<tag-state>> text="open">
@@ -41,14 +41,14 @@ tags: $:/tags/Macro
 </$set>
 \end
 
-\define get-pinboard-bookmarks()
+\define get-pinboard-bookmarks(selectedTiddler:"$:/temp/get-pinboard-bookmarks/selectedTiddler")
 <div class="tc-tabbed-table-of-contents">
-    <$linkcatcher to="selectedTiddler">
+    <$linkcatcher to="$selectedTiddler$">
         <div class="tc-table-of-contents">
             <ol class="tc-toc toc-selective-expandable">
                 <$list filter="[all[current]tags[]]">
                     <!-- Currently selection styling is not working on tags. -->
-                    <$set name="item-class" filter="[all[current]field:title{selectedTiddler}]" value="toc-item-selected" emptyValue="toc-item">
+                    <$set name="item-class" filter="[all[current]field:title{$selectedTiddler$}]" value="toc-item-selected" emptyValue="toc-item">
                         <li class=<<item-class>>>
                             <!-- Would have included the contents of this macro right here but the only way I could find to transclude what I wanted was via a macro variable. -->
                             <$macrocall $name="pinboard-bookmark-tag-body" callingTiddler="$(currentTiddler)$" tag=<<currentTiddler>>/>
@@ -59,8 +59,8 @@ tags: $:/tags/Macro
         </div>
     </$linkcatcher>
     <div class="tc-tabbed-table-of-contents-content">
-        <h1>{{selectedTiddler}}</h1>
-        <$transclude mode="block" tiddler={{selectedTiddler}}>
+        <h1>{{$selectedTiddler$}}</h1>
+        <$transclude mode="block" tiddler={{$selectedTiddler$}}>
             This tiddler does not exist.
         </$transclude>
     </div>
