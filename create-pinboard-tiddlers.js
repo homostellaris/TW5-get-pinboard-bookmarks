@@ -22,19 +22,26 @@ exports.startup = function() {
     console.log("Executing `create-pinboard-tiddlers.js`.");
     start = new Date().getTime();
 
-    var tiddlerCountBefore = $tw.wiki.allTitles().length;
-    console.log(`Tiddler count before: ${tiddlerCountBefore}`);
-    var tiddlerCountAfter;
+    var apiToken = getApiToken();
+    if (!apiToken) {
+        console.log(`For the Pinboard plugin to work you must add your API token as the body of the ${configTiddlerTitle} tiddler and then restart your tiddlywiki.`);
+        return
+    }
 
-    deleteAllPinboardTiddlers();
     createPinboardDirectory();
-    getPinboardBookmarksFromApi();
+    deleteAllPinboardTiddlers();
+
+    var tiddlerCountBefore = $tw.wiki.allTitles().length;
+    var tiddlerCountAfter;
+    
+    getPinboardBookmarksFromApi(apiToken);
 
     setTimeout(() => {
             tiddlerCountAfter = $tw.wiki.allTitles().length;
-            console.log(`Tiddler count after: ${tiddlerCountAfter}`);
+            console.log(`Tiddler count before getting Pinboard bookmarks: ${tiddlerCountBefore}`);
+            console.log(`Tiddler count after getting Pinboard bookmarks: ${tiddlerCountAfter}`);
         },
-        14000
+        16000
     );
 }
 
@@ -46,14 +53,10 @@ function createPinboardDirectory() {
 
 function getApiToken() {
     var apiToken = $tw.wiki.getTiddlerText(configTiddlerTitle);
-    if (!apiToken) {
-        throw new Error(`For the Pinboard plugin to work you must add your API token as the body of the ${configTiddlerTitle} tiddler.`);
-    }
     return apiToken;
 }
 
-function getPinboardBookmarksFromApi() {
-    var apiToken = getApiToken();
+function getPinboardBookmarksFromApi(apiToken) {
     var url = `https://api.pinboard.in/v1/posts/all?auth_token=d-metcalfe:${apiToken}&format=json`;
     var responseBody = '';
 
@@ -64,6 +67,10 @@ function getPinboardBookmarksFromApi() {
             responseBody += chunk;
         });
         res.on('end', () => {
+            end = new Date().getTime();
+            secondsTaken = (end - start) / 1000;
+            console.log(`Time taken to initialise and retrieve Pinboard bookmarks: ${secondsTaken} seconds`);
+
             responseBody = JSON.parse(responseBody);
             createPinboardTiddlers(responseBody);
         })
@@ -84,9 +91,6 @@ function createPinboardTiddlers(bookmarksJson, pinboardTiddlersDirPath) {
             tags: [pinboardTag].concat(bookmark.tags.split(' '))
         })
     }
-    end = new Date().getTime();
-    secondsTaken = (end - start) / 1000;
-    console.log(`Time taken: ${secondsTaken} seconds`);
 }
 
 function deleteAllPinboardTiddlers() {
