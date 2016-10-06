@@ -1,13 +1,13 @@
 title: Get Pinboard Bookmarks Macro
 tags: $:/tags/Macro
 
-\define pinboard-bookmarks-list-by-tag(tag)
+\define pinboard-bookmarks-list-by-tag(tag,selectTiddler:"$:/temp/get-pinboard-bookmarks/selectedTiddler")
 <$list filter="[all[tiddlers]tag[$tag$]!has[draft.of]]">
-    <$set name="item-class" filter=<<toc-tabbed-selected-item-filter selectedTiddler:"""$:/temp/get-pinboard-bookmarks/selectedTiddler""">> value="toc-item-selected" emptyValue="toc-item">
+    <$set name="item-class" filter=<<toc-tabbed-selected-item-filter selectedTiddler:$selectedTiddler$>> value="toc-item-selected" emptyValue="toc-item">
         <!-- Provides the indentation relative to tag. -->
         <ol>
             <li class=<<item-class>>>
-            <!-- Use of the link widget was necessary to tap existing TOC CSS styles which specify a `toc-item-selected > a`. List widgets default template produces `toc-item-selected > div > a`. -->
+                <!-- Use of the link widget was necessary to tap existing TOC CSS styles which specify a `toc-item-selected > a`. List widgets default template produces `toc-item-selected > div > a`. -->
                 <$link>
                     <$view field="title"/>
                 </$link>
@@ -17,7 +17,7 @@ tags: $:/tags/Macro
 </$list>
 \end
 
-\define pinboard-bookmark-tag-body(callingTiddler,tag)
+\define pinboard-bookmark-tag-body(callingTiddler,tag,selectedTiddler:"$:/temp/get-pinboard-bookmarks/selectedTiddler")
 <$set name="tag-state" value=<<qualify """$:/state/get-pinboard-bookmarks/$callingTiddler$-$tag$""">>>
     <$link>
         <$list filter="[all[current]]">
@@ -36,7 +36,7 @@ tags: $:/tags/Macro
         </$list>
     </$link>
     <$reveal type="match" state=<<tag-state>> text="open">
-        <$macrocall $name="pinboard-bookmarks-list-by-tag" tag=<<currentTiddler>>/>
+        <$macrocall $name="pinboard-bookmarks-list-by-tag" tag=<<currentTiddler>> selectedTiddler="$selectedTiddler$"/>
     </$reveal>
 </$set>
 \end
@@ -51,7 +51,7 @@ tags: $:/tags/Macro
                     <$set name="item-class" filter="[all[current]field:title{$selectedTiddler$}]" value="toc-item-selected" emptyValue="toc-item">
                         <li class=<<item-class>>>
                             <!-- Would have included the contents of this macro right here but the only way I could find to transclude what I wanted was via a macro variable. -->
-                            <$macrocall $name="pinboard-bookmark-tag-body" callingTiddler="$(currentTiddler)$" tag=<<currentTiddler>>/>
+                            <$macrocall $name="pinboard-bookmark-tag-body" callingTiddler="$(currentTiddler)$" tag=<<currentTiddler>> selectedTiddler="$selectedTiddler$"/>
                         </li>
                     </$set>
                 </$list>
