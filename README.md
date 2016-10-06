@@ -13,7 +13,7 @@ These 'bookmark tiddlers' have the following characteristics:
 * They are saved in a `.tid` file with the naming convention `pinboard_Bookmark_Title` (the intention was that they be saved in `tiddlers/pinboard` but that is not possible until [this pull request](https://github.com/Jermolene/TiddlyWiki5/pull/2541) is merged on the TiddlyWiki5 repository).
 * They are tagged with `$:/tags/Pinboard`.
 * They have a *url* field that contains the URL of the original bookmark.
+* They have a *type* field set to `text/x-markdown` which means their content is parsed as Markdown.
 
 # Roadmap
-* Parse the bookmark description as Markdown.
-* Create *Get Started* instructions as well as *readme* and *usage* section in plugin section of *Control Panel*.
+* Create **Get Started** instructions as well as **readme** and **usage** information in plugin section of **Control Panel**.
