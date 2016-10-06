@@ -58,11 +58,13 @@ tags: $:/tags/Macro
             </ol>
         </div>
     </$linkcatcher>
+    <$tiddler tiddler={{$selectedTiddler$}}>
     <div class="tc-tabbed-table-of-contents-content">
-        <h1>{{$selectedTiddler$}}</h1>
+        <a href={{!!url}} target="_blank"><h1>{{$selectedTiddler$}}</h1></a>
         <$transclude mode="block" tiddler={{$selectedTiddler$}}>
             This tiddler does not exist.
         </$transclude>
     </div>
+    </$tiddler>
 </div>
 \end
