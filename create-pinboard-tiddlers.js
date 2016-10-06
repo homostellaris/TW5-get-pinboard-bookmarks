@@ -33,7 +33,7 @@ exports.startup = function() {
 
     var tiddlerCountBefore = $tw.wiki.allTitles().length;
     var tiddlerCountAfter;
-    
+
     getPinboardBookmarksFromApi(apiToken);
 
     setTimeout(() => {
@@ -88,7 +88,8 @@ function createPinboardTiddlers(bookmarksJson, pinboardTiddlersDirPath) {
             title: bookmark.description,
             text: bookmark.extended,
             url: bookmark.href,
-            tags: [pinboardTag].concat(bookmark.tags.split(' '))
+            tags: [pinboardTag].concat(bookmark.tags.split(' ')),
+            type: 'text/x-markdown'
         })
     }
 }
