@@ -57,7 +57,7 @@ function getApiToken() {
 }
 
 function getPinboardBookmarksFromApi(apiToken) {
-    var url = `https://api.pinboard.in/v1/posts/all?auth_token=d-metcalfe:${apiToken}&format=json`;
+    var url = `https://api.pinboard.in/v1/posts/all?auth_token=${apiToken}&format=json`;
     var responseBody = '';
 
     https.get(url, (res) => {
