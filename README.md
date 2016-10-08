@@ -17,8 +17,10 @@ This plugin only works with the Node.js version of TiddlyWiki5.
 # Getting Started
 #### If you don't already have a clone of the TiddlyWiki5 repository.
 `git clone https://github.com/Jermolene/TiddlyWiki5.git`
+
 #### Clone this repo inside the plugins directory of the TiddlyWiki5 repository.
 `cd TiddlyWiki5/plugins`
+
 `git clone https://github.com/moderatemisbehaviour/TW5-get-pinboard-bookmarks.git`
 #### Add your Pinboard API key to the plugin's `config.tid`.
 1. Go to [the password section of your Pinboard's account setting page](https://pinboard.in/settings/password).
