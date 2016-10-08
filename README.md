@@ -1,5 +1,7 @@
 # TW5-get-pinboard-bookmarks
-### Disclaimer
+Enrich your tiddlers with bookmarks from your [Pinboard](https://pinboard.in/) account.
+
+#### _Disclaimer_
 This plugin is a work in progress, it is not yet `1.0`.
 This plugin only works with the Node.js version of TiddlyWiki5.
 
@@ -16,4 +18,6 @@ These 'bookmark tiddlers' have the following characteristics:
 * They have a *type* field set to `text/x-markdown` which means their content is parsed as Markdown.
 
 # Roadmap
+* Normalise Pinboard tags by replacing spaces with hyphens and capitalising words, allowing 'tag tiddlers' to have well formed titles.
+* Make Markdown parsing and tag normalisation optional via configuration.
 * Create **Get Started** instructions as well as **readme** and **usage** information in plugin section of **Control Panel**.
