@@ -1,9 +1,9 @@
 title: Get Pinboard Bookmarks Macro
 tags: $:/tags/Macro
 
-\define pinboard-bookmarks-list-by-tag(tag,selectTiddler:"$:/temp/get-pinboard-bookmarks/selectedTiddler")
+\define pinboard-bookmarks-list-by-tag(tag,selectedTiddler:"$:/temp/get-pinboard-bookmarks/selectedTiddler")
 <$list filter="[all[tiddlers]tag[$tag$]!has[draft.of]]">
-    <$set name="item-class" filter=<<toc-tabbed-selected-item-filter selectedTiddler:$selectedTiddler$>> value="toc-item-selected" emptyValue="toc-item">
+    <$set name="item-class" filter=<<toc-tabbed-selected-item-filter selectedTiddler:"$selectedTiddler$">> value="toc-item-selected" emptyValue="toc-item">
         <!-- Provides the indentation relative to tag. -->
         <ol>
             <li class=<<item-class>>>
@@ -36,7 +36,7 @@ tags: $:/tags/Macro
         </$list>
     </$link>
     <$reveal type="match" state=<<tag-state>> text="open">
-        <$macrocall $name="pinboard-bookmarks-list-by-tag" tag=<<currentTiddler>> selectedTiddler="$selectedTiddler$"/>
+        <$macrocall $name="pinboard-bookmarks-list-by-tag" tag=<<currentTiddler>> selectedTiddler="""$selectedTiddler$"""/>
     </$reveal>
 </$set>
 \end
