@@ -35,12 +35,13 @@ API_TOKEN_GOES_HERE
 1. Navigate back to the root directory of the TiddlyWiki5 repository.
 2. `node tiddlywiki your-wiki --init server`
 
-#### Add this plugin to your wiki's `tiddlywiki.info` file.
+#### Add plugins to your wiki's `tiddlywiki.info`.
 ```
 {
     ...,
     "plugins": [
         ...,
+        "tiddlywiki/markdown",
         "TW5-get-pinboard-bookmarks"
     ],
     ...,
