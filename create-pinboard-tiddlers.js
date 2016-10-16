@@ -13,7 +13,6 @@ const https = require('https');
 const path = require('path');
 
 const pinboardTag = '$:/tags/Pinboard';
-const configTiddlerTitle = '$:/config/get-pinboard-bookmarks';
 
 exports.name = "create-pinboard-tiddlers";
 exports.after = ["load-modules"];
@@ -23,8 +22,9 @@ exports.startup = function() {
     start = new Date().getTime();
 
     var apiToken = getApiToken();
+
     if (!apiToken) {
-        console.log(`For the Pinboard plugin to work you must add your API token as the body of the ${configTiddlerTitle} tiddler and then restart your tiddlywiki.`);
+        console.log("For the get-pinboard-bookmarks plugin to work you must have your Pinboard API token stored in an environment variable named 'pinboard_api_token'.");
         return
     }
 
@@ -52,7 +52,7 @@ function createPinboardDirectory() {
 }
 
 function getApiToken() {
-    var apiToken = $tw.wiki.getTiddlerText(configTiddlerTitle);
+    apiToken = process.env.pinboard_api_token
     return apiToken;
 }
 
