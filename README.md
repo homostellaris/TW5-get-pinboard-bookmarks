@@ -25,8 +25,10 @@ _...are included in tiddlers that share the same tags._
 1. Go to [the password section of your Pinboard's account setting page](https://pinboard.in/settings/password).
 2. Copy the full API token including the username.
 3. Create a `pinboard_api_token` envrionment variable.
+
 ###### If you're on Windows.
 Type `setx` `pinboard_api_token` *`your_api_token`* into a command prompt. _The envrionment variable will only be available in future instances of command prompt._
+
 ###### If you're on Linux.
 Then there are a variety of ways you might create a persistent environment variable. StackOverflow has [the answers](http://unix.stackexchange.com/questions/117467/how-to-permanently-set-environmental-variables/117470#117470).
 
