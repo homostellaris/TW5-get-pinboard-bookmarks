@@ -27,7 +27,7 @@ _...are included in tiddlers that share the same tags._
 3. Create a `pinboard_api_token` envrionment variable.
 
 ###### If you're on Windows.
-Type `setx` `pinboard_api_token` *`your_api_token`* into a command prompt. _The envrionment variable will only be available in future instances of command prompt._
+Type `setx` `pinboard_api_token` *`your_api_token`* into a command prompt. _The environment variable will only be available in future instances of command prompt._
 
 ###### If you're on Linux.
 Then there are a variety of ways you might create a persistent environment variable. StackOverflow has [the answers](http://unix.stackexchange.com/questions/117467/how-to-permanently-set-environmental-variables/117470#117470).
