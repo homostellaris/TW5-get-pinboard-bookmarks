@@ -70,3 +70,4 @@ These 'bookmark tiddlers' have the following characteristics:
 * Normalise Pinboard tags by replacing spaces with hyphens and capitalising words, allowing 'tag tiddlers' to have well formed titles.
 * Make Markdown parsing and tag normalisation optional via configuration.
 * Create **Get Started** instructions as well as **readme** and **usage** information in plugin section of **Control Panel**.
+* Add a system tiddler that summarises all bookmark tiddlers and provides buttons to delete all and resync.
