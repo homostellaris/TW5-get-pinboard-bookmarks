@@ -12,10 +12,10 @@ if (!$tw.node) return;
 const https = require('https');
 const path = require('path');
 
-const pinboardTag = '$:/tags/Pinboard';
-
 exports.name = "create-pinboard-tiddlers";
 exports.after = ["load-modules"];
+
+const pinboardTiddlerTag = '$:/tags/Pinboard';
 
 exports.startup = function() {
     console.log("Executing `create-pinboard-tiddlers.js`.");
@@ -84,18 +84,34 @@ function createPinboardTiddlers(bookmarksJson, pinboardTiddlersDirPath) {
     var bookmark;
     for (var i = 0; i < bookmarksJson.length; i++) {
         bookmark = bookmarksJson[i];
+        tags = getTiddlyWikiTags(bookmark);
         $tw.wiki.addTiddler({
             title: bookmark.description,
             text: bookmark.extended,
             url: bookmark.href,
-            tags: [pinboardTag].concat(bookmark.tags.split(' ')),
+            tags: tags,
             type: 'text/x-markdown'
         })
     }
 }
 
+function getTiddlyWikiTags(bookmark) {
+    var pinboardTags = bookmark.tags.split(' ');
+    var tiddlyWikiTags = ['$:/tags/Pinboard']; // Can't use pinboardTiddlerTags constant here for some reason. Need to learn more about JS variable scope...
+    for(var i = 0; i < pinboardTags.length; i++) {
+        var pinboardTag = pinboardTags[i];
+        var tiddlyWikiTag = normaliseTag(pinboardTag);
+        tiddlyWikiTags.push(tiddlyWikiTag);
+    }
+    return tiddlyWikiTags;
+}
+
+function normaliseTag(tag) {
+    return tag.replace(/-/g, ' ');
+}
+
 function deleteAllPinboardTiddlers() {
-    var pinboardTagTiddlers = $tw.wiki.getTiddlersWithTag(pinboardTag);
+    var pinboardTagTiddlers = $tw.wiki.getTiddlersWithTag(pinboardTiddlerTag);
     console.log(`Deleting ${pinboardTagTiddlers.length} bookmark tiddler(s).`);
     for (var i = 0; i < pinboardTagTiddlers.length; i++) {
         var pinboardTiddler = pinboardTagTiddlers[i];
