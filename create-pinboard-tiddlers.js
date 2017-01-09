@@ -84,9 +84,10 @@ function createPinboardTiddlers(bookmarksJson, pinboardTiddlersDirPath) {
     var bookmark;
     for (var i = 0; i < bookmarksJson.length; i++) {
         bookmark = bookmarksJson[i];
+        title = normaliseTitle(bookmark.description);
         tags = getTiddlyWikiTags(bookmark);
         $tw.wiki.addTiddler({
-            title: bookmark.description,
+            title: title,
             text: bookmark.extended,
             url: bookmark.href,
             tags: tags,
@@ -104,6 +105,11 @@ function getTiddlyWikiTags(bookmark) {
         tiddlyWikiTags.push(tiddlyWikiTag);
     }
     return tiddlyWikiTags;
+}
+
+/* Forward slashes are normally replaced with underscores in the `generateTiddlerFilename` method of the FileSystemAdaptor, but not when a path name filter is applied. It makes sense that file names are not sanitised before application of path name filters because changing the characters could stop them working as intended. However in this case forward slashes in Pinboard bookmark descriptions need to be replaced otherwise they are interpreted as path separators and cause unwanted subdirectories to be created. */
+function normaliseTitle(title) {
+    return title.replace(/\//g, '_');
 }
 
 function normaliseTag(tag) {
