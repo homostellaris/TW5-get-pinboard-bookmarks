@@ -13,7 +13,7 @@ _...are included in tiddlers that share the same tags._
 * This plugin is a work in progress, it is not yet `1.0`.
 * This plugin only works with the Node.js version of TiddlyWiki5.
 * There is [a fork of the TiddlyWiki5 repo](https://github.com/moderatemisbehaviour/TiddlyWiki5) with a modified readme to walk you through setting up a TiddlyWiki server.
-* The Pinboard bookmarks are only retrieved on server startup as there are not currently any easy hooks to perform this action with TiddlyWiki's plugin system. However the fork linked above contains a script and instructions for setting up a cron job to restart the TiddlyWiki server, effectively providing regular updates to the _bookmark tiddlers_.
+* The Pinboard bookmarks are only retrieved on server startup as there are not currently any easy hooks to perform this action with TiddlyWiki's plugin system. However the fork linked above contains a script and [instructions for setting up a cron job to restart the TiddlyWiki server](https://github.com/moderatemisbehaviour/TiddlyWiki5/blob/aws-ec2/readme.md#restarting-the-server-on-a-schedule), effectively providing regular updates to the _bookmark tiddlers_.
 
 # Getting Started
 #### If you don't already have a clone of the TiddlyWiki5 repository.
